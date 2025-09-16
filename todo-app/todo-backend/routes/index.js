@@ -4,11 +4,12 @@ const redis = require("../redis");
 
 const configs = require("../util/config");
 
-let visits = 0;
-
 /* GET index data. */
 router.get("/", async (req, res) => {
+  let visits = await redis.getAsync("visits");
+  if (isNaN(visits)) visits = 0;
   visits++;
+  await redis.setAsync("visits", visits);
 
   res.send({
     ...configs,
