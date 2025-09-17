@@ -3,6 +3,7 @@ import axios from '../util/apiClient'
 
 import List from './List'
 import Form from './Form'
+import Todo from './Todo'
 
 const TodoView = () => {
   const [todos, setTodos] = useState([])
@@ -32,6 +33,11 @@ const TodoView = () => {
       done: true
     })
     refreshTodos()
+  }
+
+
+  if (!todos.length) {
+    return <>loading...</>
   }
 
   return (
