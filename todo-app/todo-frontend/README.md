@@ -17,5 +17,8 @@ Use env VITE_BACKEND_URL to set where the backend for this application is
 
 build: `docker build . -t todo-frontend`
 
-run: `docker run -p 8000:80 todo-frontend`
+start: `docker run -p 8000:80 todo-frontend`
 
+or alternatively
+
+start dev: `docker compose -f docker-compose.dev.yml up`
