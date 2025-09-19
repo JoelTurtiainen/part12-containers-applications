@@ -9,6 +9,53 @@ services:
     ports:
       - 5173:5173
     container_name: todo-front-dev
+
+  server:
+    image: todo-back-dev 
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    # depends_on:
+    #   mongo:
+    #     condition: service_healthy
+    #   redis:
+    #     condition: service_healthy
+    volumes:
+      - ./todo-backend/:/usr/src/app
+    ports:
+    - 3000:3000
+    environment:
+    - REDIS_URL=redis://redis:6379 
+    - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes:
+      - ./todo-backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+
+  redis:
+    container_name: todo-backend-redis
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+    command: ['redis-server', '--appendonly', 'yes'] # Overwrite the CMD
+    volumes: # Declare the volume
+      - ./todo-backend/redis_data:/data
+    healthcheck:
+       test: ["CMD", "redis-cli","ping"]
+
+
   nginx:
     image: nginx:1.20.1
     volumes:
@@ -18,3 +65,8 @@ services:
     container_name: reverse-proxy
     depends_on:
       - app # wait for the frontend container to be started
+
+
+volumes:
+  mongo_data: {}
+  redis_data: {}
