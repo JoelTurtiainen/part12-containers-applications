@@ -10,7 +10,7 @@ import Hospital from "./entries/Hospital";
 import OccupationalHealthcare from "./entries/OccupationalHealthcare";
 import HealthCheck from "./entries/HealthCheck";
 import AddEntryForm from "./AddEntryForm";
-import axios from "axios";
+import axios from "../../util/apiClient";
 import { Alert, CircularProgress } from "@mui/material";
 
 const PatientDetailed = () => {

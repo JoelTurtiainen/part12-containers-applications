@@ -1,15 +1,6 @@
 import { useState } from "react";
-import {
-  Box,
-  Table,
-  Button,
-  TableHead,
-  Typography,
-  TableCell,
-  TableRow,
-  TableBody,
-} from "@mui/material";
-import axios from "axios";
+import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from "@mui/material";
+import axios from "../../util/apiClient";
 
 import { PatientFormValues, Patient } from "../../types";
 import AddPatientModal from "../AddPatientModal";
@@ -43,10 +34,7 @@ const PatientListPage = ({ patients, setPatients }: Props) => {
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         if (e?.response?.data && typeof e?.response?.data === "string") {
-          const message = e.response.data.replace(
-            "Something went wrong. Error: ",
-            "",
-          );
+          const message = e.response.data.replace("Something went wrong. Error: ", "");
           console.error(message);
           setError(message);
         } else {
@@ -90,12 +78,7 @@ const PatientListPage = ({ patients, setPatients }: Props) => {
           ))}
         </TableBody>
       </Table>
-      <AddPatientModal
-        modalOpen={modalOpen}
-        onSubmit={submitNewPatient}
-        error={error}
-        onClose={closeModal}
-      />
+      <AddPatientModal modalOpen={modalOpen} onSubmit={submitNewPatient} error={error} onClose={closeModal} />
       <Button variant="contained" onClick={() => openModal()}>
         Add New Patient
       </Button>
