@@ -1,6 +1,6 @@
+---
 services:
   app:
-    image: fs-patientor-front-dev
     build:
       context: .
       dockerfile: dev.Dockerfile

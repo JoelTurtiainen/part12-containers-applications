@@ -1,6 +1,6 @@
+---
 services:
   app:
-    image: fs-patientor-front
     build:
       context: ./patientor-frontend/
       dockerfile: Dockerfile
@@ -8,14 +8,15 @@ services:
       - ./patientor-frontend/:/usr/src/app
     container_name: fs-patientor-front
     environment:
-    - VITE_BACKEND_URL=http://localhost:8080/api/
+      - VITE_BACKEND_URL=http://localhost:8080/api/
 
   server:
     build:
       context: ./patientor-backend/
       dockerfile: Dockerfile
+    container_name: fs-patientor-back
     volumes:
-    - ./patientor-backend/:/usr/src/app
+      - ./patientor-backend/:/usr/src/app
 
   nginx:
     image: nginx:1.20.1
@@ -26,3 +27,4 @@ services:
     container_name: fs-patientor-reverse-proxy
     depends_on:
       - app
+      - server

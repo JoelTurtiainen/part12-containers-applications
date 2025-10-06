@@ -1,6 +1,6 @@
-FROM node:20 AS server
+FROM node:24.9-alpine
 
-WORKDIR /usr/src/app
+WORKDIR app
 
 COPY . .
 
@@ -8,4 +8,4 @@ COPY . .
 RUN npm install
 
 # npm run dev is the command to start the application in development mode
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["npm", "run", "dev" ]
