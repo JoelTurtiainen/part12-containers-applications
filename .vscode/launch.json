@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "attach",
+      "name": "Attach to dev:debug",
+      "port": 9230,
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "<node_internals>\\**",
+        "/tmp/**",
+        "${workspaceFolder}/**/node_modules/**"
+      ]
+    }
+  ]
+}
